@@ -1,0 +1,105 @@
+<!-- Page Content -->
+            <div class="container">
+                <div class="row">
+                  <!-- Info column -->
+                  <div class="col-lg-4">
+                    <div class="card" >
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item avatar-container">
+                                <img src="{{user.avataUrl}}" alt="Name" class="admin-img">
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="admin-name" class="col">Full name</div>
+                                    <div  class="col" style="text-align: left;">
+                                        {{user.firstname}} {{user.lastname}}
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="admin-email" class="col">Email</div>
+                                    <div  class="col" style="text-align: left;">
+                                      {{#if user.email}}
+                                        {{user.email}}
+                                      {{else}}
+                                        not registerd
+                                      {{/if}}
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="admin-phone" class="col">Phone</div>
+                                    <div  class="col" style="text-align: left;">
+                                      {{#if user.phone}}
+                                        {{user.phone}}
+                                      {{else}}
+                                        not registerd
+                                      {{/if}}
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="admin-address" class="col">Address</div>
+                                    <div  class="col" style="text-align: left;">
+                                      {{#if user.address}}
+                                        {{user.address}}
+                                      {{else}}
+                                        not registerd
+                                      {{/if}}
+                                    </div>
+                                </div>
+                            </li>                       
+                        </ul>
+                      </div>
+                  </div>
+                  <!-- Change setting form -->
+                  <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="/adminProfile/update" method="POST" enctype="multipart/form-data">
+                                <div class="row">
+                                  <div class="form-group col-md-6">
+                                    <label for="productImg">New image</label>
+                                    <input type="file" class="form-control" id="adminImg" name="img" accept="image/*" >
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="input-first-name">First name</label>
+                                    <input type="text" class="form-control" id="input-first-name" name="firstname" style="display: inline-block;" placeholder="Fisrt name">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="input-last-name">Last name</label>
+                                    <input type="text" class="form-control" id="input-last-name"  name="lastname" placeholder="Last name">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Email</label>
+                                    <input type="email" class="form-control" id="inputEmail4" name="email" placeholder="Email">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="input-phone">Phone</label>
+                                    <input type="text" class="form-control" id="input-phone" name="phone" placeholder="Phone">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="input-address">Address</label>
+                                    <input type="text" class="form-control" id="input-address" name="address" placeholder="Address">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Password</label>
+                                    <input type="password" class="form-control" id="inputPassword4" name="password" placeholder="Password" onChange="onChange()">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="input-confirm-password">Confirm password</label>
+                                    <input type="password" class="form-control" id="input-confirm-password" name="confirm" placeholder="Confirm new password" onChange="onChange()">
+                                  </div>
+                                </div>                                                       
+                                <button type="submit" class="btn btn-primary btn-submit">Save change</button>
+                              </form>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of page content -->

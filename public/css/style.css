@@ -1,0 +1,115 @@
+/* ---------------------------------------------------
+    Admin profile style
+----------------------------------------------------- */
+
+.admin-img {
+    width: 154px;
+    margin-top: 15px;
+    border-radius: 50%;
+}
+
+.btn-upload {
+    display: block;
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #fff;
+    box-shadow: none;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 16px;
+    margin-bottom: 16px;
+
+}
+
+.btn-upload:hover {
+    opacity: 0.8;
+    color: #fff;
+    
+}
+
+.avatar-container {
+    text-align: center;
+    justify-content: center;
+}
+
+.card {
+    margin-top: 14px;
+}
+.card .col-md-6 {
+    margin-top: 20px;    
+}
+.btn-submit {
+    margin-top: 16px;
+    background: #0d6efd;
+    border: none;
+}
+
+.btn-submit:hover {
+    background: #0d6efd;
+    opacity: 0.8;
+}
+
+/* ---------------------------------------------------
+    User profile style
+----------------------------------------------------- */
+.user-img {
+    border-radius: 50%;
+}
+
+.hiddenRow {
+    padding: 0 !important;
+}
+
+.hiddenRow .row {
+    margin-bottom: 4px;
+}
+
+.detail-attribute {
+    font-weight: bold;
+}
+
+/* ---------------------------------------------------
+    Product page style
+----------------------------------------------------- */
+#add-product-btn {
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #fff;
+    margin-top: 15px;
+    box-shadow: none;
+}
+#add-product-btn:hover {
+    color: #ccc;
+    background-color: #0d6efd ;
+    opacity: 0.8;
+}
+
+/* ---------------------------------------------------
+    Dashboard style
+----------------------------------------------------- */
+.summary-card .row h2 {
+    justify-content: center;
+    text-align: center;
+    margin-top: 9px;
+}
+.summary-card .row h5 {
+    font-weight: bold;
+}
+
+canvas {
+    margin-top: 30px;
+}
+
+h5 {
+    font-weight: bold;
+}
+
+.pagination {
+    float: right;
+    margin-top: 15px;
+}
+/* ---------------------------------------------------
+    transparent search nav bar
+----------------------------------------------------- */
+
+

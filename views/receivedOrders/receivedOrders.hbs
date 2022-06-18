@@ -1,0 +1,92 @@
+<!-- Orders table -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Pending orders</h5>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr> 
+                                                <th>Customer</th>
+                                                <th>Address</th>
+                                                <th>Email</th>
+                                                <th>Time</th>                                           
+                                            </tr>
+                                        </thead>                   
+                                        <tbody>   
+                                            {{#each orders}}                                                                                                         
+                                            <tr data-toggle="collapse" data-target="#{{this._id}}" class="accordion-toggle">    
+                                                <td>{{this.name}}</td>
+                                                <td>{{this.address}}</td>
+                                                <td>{{this.email}}</td>
+                                                <td>{{this.createdAt}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6" class="hiddenRow">
+                                                    <!-- collapse order data-->
+                                                    <div class="collapse" id="{{this._id}}">
+                    
+                                                        <div class="card card-body">
+                                                             <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Phone number:</div>
+                                                                <div class="col-sm-8">
+                                                                    {{this.phone}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Ordered items:</div>
+                                                                <div class="col-sm-8">
+                                                                    {{#each this.products}} 
+                                                                        {{this.item.name}}({{this.qty}}), 
+                                                                    {{/each}} 
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Total price:</div>
+                                                                <div class="col-sm-8">
+                                                                    {{this.totalPrice}}
+                                                                </div>
+                                                            </div>
+                                                            </div>                           
+                                                        </div>
+                                                    </div>
+                                                    <!--  -->
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>                            
+                            </div>      
+                </div>
+            </div>  
+    </div>
+    </div>
+              <!-- Pagination -->
+                    <ul class="pagination">
+                      {{#if hasPrev}}
+                          <li class="page-item"><a class="page-link" href="/receivedOrders{{subRoute}}/{{prevAndNext.prev}}">Previous</a></li>
+                      {{else}}
+                          <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                      {{/if}}
+                      {{#if hasPrev}}
+                        <li class="page-item"><a class="page-link" href="/receivedOrders{{subRoute}}/{{prevAndNextInPages.prev}}">...</a></li>
+                      {{/if}}
+                      {{#each page}}
+                        <li class="page-item"><a class="page-link" href="/receivedOrders{{subRoute}}/{{this.page}}">{{this.page}}</a></li>
+                      {{/each}}
+                      {{#if hasNext}}
+                        <li class="page-item"><a class="page-link" href="/receivedOrders{{subRoute}}/{{prevAndNextInPages.next}}">...</a></li>
+                      {{/if}}
+                      {{#if hasNext}}
+                        <li class="page-item"><a class="page-link" href="/receivedOrders{{subRoute}}/{{prevAndNext.prev}}">Next</a></li>
+                      {{else}}
+                        <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                      {{/if}}                    
+                    </ul>
+</div>
+<!--  -->
+<!-- End of page content -->

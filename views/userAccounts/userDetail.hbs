@@ -1,0 +1,106 @@
+<!-- Page Content -->
+            <div class="container">
+                <div class="row">
+                  <!-- Info column -->
+                  <div class="col-lg-4">
+                    <div class="card" >
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item avatar-container">
+                                <img src="/images/pic-1.png" alt="Name" class="user-img img-fluid">
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="admin-name" class="col">Full name</div>
+                                    <div  class="col" style="text-align: right;">
+                                        {{customer.userName}}
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="admin-email" class="col">Email</div>
+                                    <div  class="col" style="text-align: right;">
+                                        {{customer.email}}
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="admin-phone" class="col">Phone</div>
+                                    <div  class="col" style="text-align: right;">
+                                        {{customer.phoneNumber}}
+                                    </div>
+                                </div>
+                            </li>
+                            {{!-- <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="admin-address" class="col">Address</div>
+                                    <div  class="col" style="text-align: right;">
+                                        90 Tran Phu, District 8, HCM City
+                                    </div>
+                                </div>
+                            </li> --}}
+                          
+                            
+                        </ul>
+                      </div>
+                  </div>
+                  <!-- User purchases data -->
+                  <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2>Recent orders</h2>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr> 
+                                                <th>Order date</th>
+                                                <th>Total</th>
+                                                <th>More details</th>                                           
+                                            </tr>
+                                        </thead>                   
+                                        <tbody> 
+                                             {{#each orders}}                                                                                                           
+                                            <tr data-toggle="collapse" data-target="#{{this._id}}" class="accordion-toggle">    
+                                                <td>{{this.createdAt}}</td>
+                                                <td>{{this.totalPrice}}</td>
+                                                <td><button class="btn btn-default btn-xs"><span class="bi bi-eye-fill"></span></button></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6" class="hiddenRow">
+                                                    <!-- collapse order data-->
+                                                    <div class="collapse" id="{{this._id}}">
+                                                        <div class="card card-body">
+                                                            
+                                                            <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Receiver's Address</div>
+                                                                <div class="col-sm-8">{{this.address}}</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Ordered items</div>
+                                                                <div class="col-sm-8">
+                                                                    {{#each this.products}} 
+                                                                        {{this.item.name}}({{this.qty}}), 
+                                                                    {{/each}} 
+                                                                </div>
+                                                            </div>                         
+                                                        </div>
+                                                    </div>
+                                                    <!--  -->
+                                                </td>
+                                            </tr>
+                                             {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>                            
+                            </div> 
+                            
+                        </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- End of page content -->

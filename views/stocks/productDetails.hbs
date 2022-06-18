@@ -1,0 +1,110 @@
+<!-- Page Content -->
+ <div class="container">
+                <div class="row">
+                  <!-- Info column -->
+                  <div class="col-lg-4">
+                    <div class="card" >
+                        <img class="card-img-top" src="{{this.cover}}" alt="Card image cap">
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="productName" class="col">Name</div>
+                                    <div  class="col" style="text-align: left;">
+                                        {{this.name}}
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="category" class="col">Category</div>
+                                    <div  class="col" style="text-align: left;">
+                                        {{this.category}}
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="price" class="col">Price</div>
+                                    <div  class="col" style="text-align: left;">
+                                        {{this.price}}
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="discount" class="col">Discount</div>
+                                    <div  class="col" style="text-align: left;">
+                                        {{this.discount}}
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="status" class="col">Status</div>
+                                    <div  class="col" style="text-align: left;">
+                                        {{this.status}}
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div  id="description" class="col">Description</div>
+                                    <div  class="col" style="text-align: left;">
+                                        {{this.description}}
+                                    </div>
+                                </div>
+                            </li>
+                            
+                        </ul>
+                      </div>
+                  </div>
+                  <!-- Change setting form -->
+                  <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="/stocks/detail?_id={{this._id}}" method="POST" enctype="multipart/form-data"> 
+                                <div class="row">
+                                  <div class="form-group col-md-6">
+                                    <label for="productImg">New image</label>
+                                    <input type="file" class="form-control" id="productImg" name="img" accept="image/*" >
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="productCategory">Category</label>
+                                    <input type="text" class="form-control" id="productCategory" name="category" placeholder="{{this.category}}">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="productName">Name</label>
+                                    <input type="text" class="form-control" id="productName" name="name" placeholder="{{this.name}}">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="productPrice">Price</label>
+                                    <input type="number" step="0.01" class="form-control" id="iproductPrice" name="price" placeholder="{{this.price}}">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="productDiscount">Discount</label>
+                                    <input type="number" step="0.01" class="form-control" id="productDiscount" name="discount" placeholder="{{this.discount}}">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="productStatus">Status</label>
+                                    <!-- <input type="text" class="form-control" id="productStatus" placeholder="Password"> -->
+                                    <select class="form-control" id="productStatus" name="status">
+                                      <option selected>Available</option>
+                                      <option>Out of stocks</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="productDescription">Description</label>
+
+                                    <input type="text" class="form-control" id="productDescription" name="description" placeholder="{{this.description}}">
+                                </div>
+                                 
+                                </div>                                                       
+                                <button type="submit" name="_id" value="{{this._id}}" class="btn btn-primary btn-submit">Save change</button>
+                              </form>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+<!-- End of page content -->
