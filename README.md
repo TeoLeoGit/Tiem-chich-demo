@@ -1,2 +1,1 @@
-# Foodip admin page
- 
+# VNSC clone
