@@ -23,7 +23,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
     
-    <title>Admin page</title>
+    <title>VNVC clone</title>
 </head>
 <body>
     <div class="wrapper">
@@ -34,13 +34,14 @@
                 
                 <div class="sidebar-header">
                     <h3><i class="bi bi-person-circle"></i>Wellcome</h3>
-                    <p>{{user.firstname}} {{user.lastname}}</p>
-                    {{!-- <p>{{user.lastname}}</p> --}}
+                    {{#if user}}
+                        <p>{{user.name}}</p>
+                    {{/if}}
                 </div>
 
         
                 <ul class="list-unstyled components">
-                    <li>
+                    {{!-- <li>
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Dashboard</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
                             <li>
@@ -50,30 +51,49 @@
                                 <a href="/orders">Orders</a>
                             </li>
                         </ul>
-                    </li>
-                    <li>
+                    </li> --}}
+                    {{!-- <li>
                         <a href="/userAccounts">User accounts</a>
-                    </li>
+                    </li> --}}
+                    {{#if user}}
+                        <li>
+                            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Duyệt yêu cầu</a>
+                            <ul class="collapse list-unstyled" id="pageSubmenu">
+                                <li>
+                                    <a href="/orders">Duyệt đơn đặt mua vacxin</a>
+                                </li>
+                                <li>
+                                    <a href="/orders">Duyệt đơn đăng ký tiêm chủng</a>
+                                </li>
+                            </ul>
+                        </li>
+                    {{else}}
+                        <li>
+                            <a href="/vaccines">Xem danh sách vaccines</a>
+                        </li>
+                        <li>
+                            <a href="/vaccines">Xem lịch sử tiêm</a>
+                        </li>
+                        <li>
+                            <a href="/vaccines">Tìm kiếm trung tâm</a>
+                        </li>
+                    {{/if}}
                     <li>
-                        <a href="/admins">Admin accounts</a>
+                        <a href="/questions">Tư vấn</a>
                     </li>
-                    <li>
-                        <a href="/stocks">Stocks</a>
-                    </li>
-                    <li>
+                    
+                    {{!-- <li>
                         <a href="/receivedOrders">Received orders</a>
-                    </li>
+                    </li> --}}
                 </ul>
-    
+
+                {{#if user}}
                 <ul class="list-unstyled CTAs">
-                    <li>
-                        <a href="/adminProfile" class="profile">Profile</a>
-                    </li>
                     <li>
                         <a href="/logout" class="sign-out">Sign out</a>
                     </li>
-                    
                 </ul>
+                {{/if}}
             </div>
         </nav>
     
@@ -81,34 +101,29 @@
             <!-- Header -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
                 <div class="container-fluid">
-        
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
                     </button>
-                    <div class="admin-profile d-inline-block ml-auto">
-                        <a class="nav-item dropdown">
-                            <img src="/images/avatar.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" class="d-inline-block align-top" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{user.firstname}} {{user.lastname}}
+                    {{#if user}}
+                        <div class="admin-profile d-inline-block ml-auto">
+                            <a class="nav-item dropdown">
+                                <img src="/images/avatar.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" class="d-inline-block align-top" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{user.name}}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/logout">Sign-out</a>
+                                </div>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/adminProfile">Profile</a>
-                                <div class="dropdown-divider"></div>
-                                {{!-- <form></form> --}}
-                                <a class="dropdown-item" href="/logout">Sign-out</a>
-                              </div>
-                        </a>
-                    </div>
+                        </div>
+                    {{/if}}
 
                 </div>
             </nav>
-            
             <!-- Page Content -->
             {{{body}}}
             <!-- End of page content -->
-
         </div>
-    
     </div>   
     <!-- Script -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

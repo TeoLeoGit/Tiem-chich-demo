@@ -1,0 +1,38 @@
+<!-- Page Co  ntent -->
+<!-- Order submitting result alert -->
+            <div class="container">
+              <div class="card">
+                  <div class="card-body">
+                      <h5 class="card-title">Danh sách điểm tiêm chủng</h5>
+                      <!-- Search bar -->
+                        <nav class="navbar navbar-light bg-light">
+                            <div class="container-fluid" >
+                              <form class="d-flex" action="/vaccines/search" method="get">
+                                <input class="form-control me-2" type="search" name= "name" placeholder="Tìm kiếm vacxin" aria-label="Search">
+                                <button class="btn btn-outline-primary" type="submit">Search</button>
+                              </form>
+                            </div>
+                        </nav>
+            
+                        <!--  -->
+                      <table id="example" class="table table-striped" style="width:100%">
+                          <thead>
+                              <tr>
+                                  <th>Điểm tiêm chủng</th>
+                                  <th>Địa chỉ</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {{#each facilities}}
+                              <tr>
+                                  <td>{{this.properties.name}}</td>
+                                  <td>thêm đc</td>
+                              </tr>
+                              {{/each}}
+                                                                                          
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+            </div>  
+            <!-- End of page content -->

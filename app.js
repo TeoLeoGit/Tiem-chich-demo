@@ -12,19 +12,22 @@ const flash = require('express-flash');
 const db = require('./database');
 //Connect to mongo
 db.connectMongoDB(process.env.DB_HOST);
-
+//Connect to neo4j
+db.connectNeo4j(process.env.GRAPH_HOST, process.env.GRAPH_PW);
 
 const indexRouter = require('./routes/index');
-// const routes = require('./routes/index')(passport);
 const authRouter = require('./routes/auth');
-const usersRouter = require('./routes/users');
-const analyticsRouter = require('./routes/analytics');
 const ordersRouter = require('./routes/orders');
-const userAccountsRouter = require('./routes/userAccounts');
-const stocksRouter = require('./routes/stocks');
-const receivedOrdersRouter = require('./routes/receivedOrders');
-const adminProfileRouter = require('./routes/adminProfile');
-const adminsRouter = require('./routes/admins');
+// const usersRouter = require('./routes/users');
+// const userAccountsRouter = require('./routes/userAccounts');
+// const stocksRouter = require('./routes/stocks');
+// const receivedOrdersRouter = require('./routes/receivedOrders');
+// const adminProfileRouter = require('./routes/adminProfile');
+// const adminsRouter = require('./routes/admins');
+                                                                                              
+//VNSC
+const vaccineRouter = require('./routes/vaccine.route')
+const facilityRoute = require('./routes/facility.route')
 
 const app = express();
 
@@ -50,15 +53,16 @@ app.use(flash());
 
 app.use('/', indexRouter);
 app.use('/', authRouter);
-app.use('/users', usersRouter);
-app.use('/analytics', analyticsRouter);
+// app.use('/users', usersRouter);
 app.use('/orders', ordersRouter);
-app.use('/userAccounts', userAccountsRouter);
-app.use('/stocks', stocksRouter);
-app.use('/receivedOrders', receivedOrdersRouter);
-app.use('/adminProfile', adminProfileRouter);
-app.use('/userAccountId', userAccountsRouter);
-app.use('/admins', adminsRouter);
+// app.use('/userAccounts', userAccountsRouter);
+// app.use('/stocks', stocksRouter);
+// app.use('/receivedOrders', receivedOrdersRouter);
+// app.use('/adminProfile', adminProfileRouter);
+// app.use('/userAccountId', userAccountsRouter);
+// app.use('/admins', adminsRouter);
+app.use('/vaccines', vaccineRouter);
+app.use('/facilities', facilityRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

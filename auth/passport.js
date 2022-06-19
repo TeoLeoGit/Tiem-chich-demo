@@ -1,7 +1,6 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcrypt');
-const Admin = require('../models/admin.model')
+const Employee = require('../models/employee.model')
 
 passport.use(new localStrategy({
     usernameField: 'username',
@@ -10,23 +9,25 @@ passport.use(new localStrategy({
     async function (username, password, done) {
         // console.log(username, password)
         try {
-            let admin = await Admin.getAdmin({ username: username})
-            // console.log(admin)
-            if (!admin) {
+            let employee = await Employee.getEmployee({ username: username})
+            // console.log(employee)
+            if (!employee) {
                 return done(null, false, { message: 'Incorrect username.' });
             }
-            let match = await validPassword(admin, password)
+            let match = await validPassword(employee, password)
             if (!match) {
                 return done(null, false, { message: 'Incorrect password.' });
             }
-            return done(null, admin);
+            return done(null, employee);
         }
             catch(err) { return done(err); }
     }
 ))
 
-async function validPassword( admin, pwd ) {
-    return bcrypt.compare(pwd, admin.password);
+async function validPassword( employee, pwd ) {
+    if (pwd === employee.password)
+         return true;
+    return false
 }
 
 passport.serializeUser(function(user, done) {
@@ -34,8 +35,8 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-    Admin.getAdminById(id)
-        .then(admin => {done(null, admin)})
+    Employee.getEmployeeById(id)
+        .then(employee => {done(null, employee)})
         .catch(err => { done(null, false)})
 
     //   done(err, user);

@@ -1,0 +1,111 @@
+
+<!-- Orders table -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Đơn hàng chưa được duyệt</h5>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr> 
+                                                <th>Khách hàng</th>
+                                                <th>Số điện thoại</th>
+                                                <th>Cơ sở tiêm</th>
+                                                <th>Danh sách vacxin đặt mua</th>           
+                                                <th>Tổng giá trị</th>                                      
+                                            </tr>
+                                        </thead>                   
+                                        <tbody>   
+                                            {{#each orders}}                                                                                                         
+                                            <tr data-toggle="collapse" data-target="#{{this._id}}" class="accordion-toggle">    
+                                                <td>{{this.buyer.name}}</td>
+                                                <td>{{this.phone}}</td>
+                                                <td>{{this.facility}}</td>
+                                                <td>
+                                                    {{#each this.vaccines}} 
+                                                        {{this.item.name}} <br>  
+                                                    {{/each}} 
+                                                </td>
+                                                <td>{{this.price}}</td>
+                                                <td>
+                                                    <form action="/orders/receive" method="post" style="display: inline-block;">
+                                                        <button type="submit" name="_id" value="{{this._id}}" class="btn btn-default btn-xs"><span class="bi bi-check-circle-fill"></span></button>                           
+                                                    </form>
+                                                    <form action="/orders/reject" method="post" style="display: inline-block;">   
+                                                        <button type="submit" name="_id" value="{{this._id}}" class="btn btn-default btn-xs"><span class="bi bi-x-circle-fill"></span></button> 
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="6" class="hiddenRow">
+                                                    <!-- collapse order data-->
+                                                    <div class="collapse" id="{{this._id}}">
+                    
+                                                        <div class="card card-body">
+                                                            <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Người được tiêm</div>
+                                                                <div class="col-sm-8">
+                                                                    {{this.receiver.name}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Quan hệ</div>
+                                                                <div class="col-sm-8">
+                                                                    {{this.receiver.relationship}} 
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Email</div>
+                                                                <div class="col-sm-8">
+                                                                    {{this.receiver.email}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Địa chỉ</div>
+                                                                <div class="col-sm-8">
+                                                                    {{this.receiver.address}}
+                                                                </div>
+                                                            </div>
+                                                            </div>                           
+                                                        </div>
+                                                    </div>
+                                                    <!--  -->
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>                            
+                            </div>      
+                </div>
+            </div>  
+    </div>
+    </div>
+              <!-- Pagination -->
+                    <ul class="pagination">
+                      {{#if hasPrev}}
+                          <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{prevAndNext.prev}}">Previous</a></li>
+                      {{else}}
+                          <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                      {{/if}}
+                      {{#if hasPrev}}
+                        <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{prevAndNextInPages.prev}}">...</a></li>
+                      {{/if}}
+                      {{#each page}}
+                        <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{this.page}}">{{this.page}}</a></li>
+                      {{/each}}
+                      {{#if hasNext}}
+                        <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{prevAndNextInPages.next}}">...</a></li>
+                      {{/if}}
+                      {{#if hasNext}}
+                        <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{prevAndNext.prev}}">Next</a></li>
+                      {{else}}
+                        <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                      {{/if}}                    
+                    </ul>
+</div>
+<!--  -->
+<!-- End of page content -->
