@@ -1,10 +1,9 @@
-const Order = require('../models/order.model');
+const Signup = require('../models/signup.model');
 const Customer = require('../models/customer.model');
-
 const mongoose = require('mongoose');
 
-class OrderController {
-    async getNewOrders(req, res, next) {
+class SignupController {
+    async getNewSignups(req, res, next) {
         if(req.isAuthenticated()) {
             let options = {
                 populate: 'vaccines.item',
@@ -14,7 +13,7 @@ class OrderController {
 
             let filter = { status: 'Submitted'}
             if(req.params.page) options['page'] = parseInt(req.params.page)
-            await Order.loadWithPagination(filter, options)
+            await Signup.loadWithPagination(filter, options)
                 .then(result => {
                     let pages = []
                     let currentPage = result.page;
@@ -32,8 +31,8 @@ class OrderController {
                     let prevAndNextInPages = { prev: currentPage - 1, next: pages[pages.length - 1].page + 1}
                     let prevAndNext = { prev: currentPage - 1, next: currentPage + 1}
                                        
-                    res.render('orders', {
-                        orders: result.docs,
+                    res.render('signups', {
+                        signups: result.docs,
                         page: pages,
                         hasPrev: hasPrev,
                         hasNext: hasNext,
@@ -47,24 +46,24 @@ class OrderController {
                 res.redirect('/login')
     }
 
-    // async receiveOrder(req, res, next) {
-    //     // console.log(req.body)
-    //     if(req.isAuthenticated()) {
-    //         Order.updateOrderById(req.body, { status: 'Received'})
-    //             .then(function (err) {
-    //                 if(!err) res.json()
-    //                 res.redirect('/orders');
-    //             })
-    //             .catch(next);
-    //     }
-    //     else   
-    //         res.redirect('/login')
-    // }
-
-    async declineOrder(req, res, next) {
+    async receiveSignup(req, res, next) {
         // console.log(req.body)
         if(req.isAuthenticated()) {
-            Order.updateOrderById(req.body, { status: 'Rejected'})
+            Signup.updateSignupById(req.body, { status: 'Received'})
+                .then(function (err) {
+                    if(!err) res.json()
+                    res.redirect('/signups');
+                })
+                .catch(next);
+        }
+        else   
+            res.redirect('/login')
+    }
+
+    async declineSignup(req, res, next) {
+        // console.log(req.body)
+        if(req.isAuthenticated()) {
+            Signup.updateSignupById(req.body, { status: 'Rejected'})
                 .then(function (err) {
                     if(!err) res.json()
                     res.redirect('/orders');
@@ -75,15 +74,13 @@ class OrderController {
             res.redirect('/login')
     }
 
-    async createOrder(req, res, next) {
+    async createSignup(req, res, next) {
         //console.log(req.body)
         let stopExcution = false;
-        let buyer = {};
-        let receiver = {};
-        let phone = req.body.phone
-        if(req.body.buyerId) {
+        let register = {};
+        if(req.body.registerId) {
             //check for existence customer
-            await Customer.getCustomerById(req.body.buyerId)
+            await Customer.getCustomerById(req.body.registerId)
                 .then(function(result) {
                     let customers = []
                     result.records.forEach(function(record) {
@@ -98,23 +95,12 @@ class OrderController {
                         stopExcution = true;
                         return;
                     }
-                    let properties = customers[0].properties;
-                    buyer["id"] = req.body.buyerId;
-                    buyer["name"] = properties.name;
 
-                    if(req.body.receiverName) {
-                        receiver["name"] = req.body.receiverName;
-                        receiver["relationship"] = req.body.relationship;
-                        receiver["email"] = req.body.email;
-                        receiver["address"] = req.body.address;
-                    } else {
-                        receiver["id"] = properties.id;
-                        receiver["name"] = properties.name;
-                        receiver["relationship"] = 'Bản thân';
-                        receiver["email"] = properties.email;
-                        receiver["address"] = properties.address;
-                        phone = properties.phone;
-                    }
+                    let properties = customers[0].properties;
+                    register["id"] = req.body.registerId;
+                    register["name"] = properties.name;
+                    register["email"] = properties.email;
+                    register["address"] = properties.address;
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -125,53 +111,37 @@ class OrderController {
                 });
         }
         else {
-            buyer["name"] = req.body.buyerName
+            register["name"] = req.body.fullname;
+            register["email"] = req.body.email;
+            register["address"] = req.body.address;
+
         }
-        
+
         if (stopExcution) return;
 
-        if(req.body.receiverName) {
-            receiver["name"] = req.body.receiverName;
-            receiver["relationship"] = req.body.relationship;
-            receiver["email"] = req.body.email;
-            receiver["address"] = req.body.address;
+        let contact = {};
+        if(req.body.contact) {
+            contact["name"] = req.body.contact;
+            contact["relationship"] = req.body.relationship;
         }
-
-        if (req.body.phone) {
-            await Customer.findCustomer(receiver.name, req.body.phone)
-                            .then(result => {
-                                console.log(result.records[0])
-                                if (result.records.length > 0)
-                                    receiver.id = result.records[0]._fields[0].properties.id
-                            });
-                            
-            await Customer.findCustomer(buyer.name, req.body.phone)
-                            .then(result => {
-                                console.log(result.records[0])
-                                if (result.records.length > 0)
-                                buyer.id = result.records[0]._fields[0].properties.id
-                            });
-                            
-        }
-        console.log(buyer)
-        console.log(receiver)
-
+        
         let vaccines = []
         if(Array.isArray(req.body.vaccines))
             req.body.vaccines.forEach(x => { vaccines.push({item: x})})
         else
             vaccines.push({item: req.body.vaccines})
-
-        let order = {
+        
+        let signup = {
             _id: mongoose.Types.ObjectId(),
-            buyer: buyer,
-            receiver: receiver,
-            phone: phone,
+            register: register,
+            contact: contact,
+            phone: req.body.phone,
+            date: req.body.date,
             vaccines: vaccines,
             facility: req.body.facility
         }
 
-        Order.addOrder(order)
+        Signup.addSignup(signup)
             .then(function (result) {
                 let returnString = 'Success!'
                 if(!result) returnString = 'Failed! Please check your information or your customer code again.'
@@ -183,4 +153,4 @@ class OrderController {
     }
 }
 
-module.exports = new OrderController();
+module.exports = new SignupController();

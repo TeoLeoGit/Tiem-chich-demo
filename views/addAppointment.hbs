@@ -1,0 +1,238 @@
+<!-- Page Content -->
+{{#if alert}}
+  <div class="alert alert-success">
+    <strong>{{alert}}</strong>
+  </div>
+{{else}}
+ <div class="container">
+                <div class="row">
+                  <!-- Info column -->
+                  {{#if order}}
+                    <div class="col-lg-4">
+                        <div class="card" >
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  id="orderId" class="col">ID</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{order._id}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Người đặt</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{order.buyer.name}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Người được tiêm</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{order.receiver.name}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Mối quan hệ với người đặt</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{order.receiver.relationship}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Email người được tiêm</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{order.receiver.email}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Địa chỉ</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{order.receiver.address}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Số điện thoại liên lạc</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{order.phone}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Cơ sở muốn tiêm</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{order.facility}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Danh sách vaccine đăng ký</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{#each order.vaccines}}
+                                                {{this.item.name}} <br>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                  {{/if}}
+
+                  {{#if signup}}
+                    <div class="col-lg-4">
+                        <div class="card" >
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  id="signupId" class="col">ID</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{signup._id}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Người đăng ký</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{signup.register.name}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Số điện thoại</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{signup.phone}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Email</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{signup.register.email}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Địa chỉ</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{signup.register.address}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Người liên hệ</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{signup.contact.name}}
+                                        </div>
+                                    </div>
+                                </li>
+                                 <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Quan hệ với người tiêm</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{signup.register.relationship}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Ngày tiêm</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{signup.date}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Cơ sở muốn tiêm</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{signup.facility}}
+                                        </div>
+                                    </div>
+                                </li>
+                               
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div  class="col">Danh sách vaccine đăng ký</div>
+                                        <div  class="col" style="text-align: left;">
+                                            {{#each signup.vaccines}}
+                                                {{this.item.name}} <br>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                  {{/if}}
+                  <!-- Change setting form -->
+                  <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="/appointment/{{#if order}}createForOrder{{/if}}{{#if signup}}createForSignup{{/if}}" method="POST"> 
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="date">Ngày tiêm</label>
+                                        <input type="date" class="form-control" id="date" name="date" required>
+                                    </div>
+                                  {{!-- <div class="form-group col-md-6">
+                                    <label for="facility">Địa điểm tiêm</label>
+                                    <select class="form-control" id="facility" name="facility" required>
+                                        {{#each facilities}}
+                                            <option>{{this.properties.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                  </div> --}}
+                                  <div class="form-group col-md-6">
+                                    <label>Chọn vaccine tiêm chủng</label>
+                                    {{#each order.vaccines}}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="vaccines" id="flexCheckDefault" value="{{this.item._id}}">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                 {{this.item.name}}
+                                            </label>
+                                        </div>
+                                    {{/each}}
+                                    {{#each signup.vaccines}}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="vaccines" id="flexCheckDefault" value="{{this.item._id}}">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                 {{this.item.name}}
+                                            </label>
+                                        </div>
+                                    {{/each}}
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="status" id="flexCheckDefault" value="done">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Đã duyệt xong.
+                                        </label>
+                                    </div>
+                                  </div>
+                                </div>                                                       
+                                <button type="submit" name="_id" value="{{order._id}}{{signup._id}}" class="btn btn-primary btn-submit">Tạo lịch hẹn</button>
+                              </form>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+{{/if}}         
+<!-- End of page content -->

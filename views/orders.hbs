@@ -31,7 +31,7 @@
                                                 </td>
                                                 <td>{{this.price}}</td>
                                                 <td>
-                                                    <form action="/orders/receive" method="post" style="display: inline-block;">
+                                                    <form action="/appointment/createForOrder" method="get" style="display: inline-block;">
                                                         <button type="submit" name="_id" value="{{this._id}}" class="btn btn-default btn-xs"><span class="bi bi-check-circle-fill"></span></button>                           
                                                     </form>
                                                     <form action="/orders/reject" method="post" style="display: inline-block;">   

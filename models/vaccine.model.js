@@ -41,13 +41,6 @@ module.exports  = {
         return await Vaccine.findOne(id).exec();
     },
 
-    async updateProductById(id, update) {
-        //console.log(id)
-        return await Vaccine.findOneAndUpdate(id, update, {
-            new: true
-        });
-    },
-
     async loadWithPagination(filter, options) {
         return await Vaccine.paginate(filter, options)
     },

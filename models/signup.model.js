@@ -2,26 +2,30 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const mongoosePaginate = require('mongoose-paginate-v2');
 
-const orderSchema = new Schema({
+const signupSchema = new Schema({
     _id: {
         type: Schema.Types.ObjectId,
         auto: true,
     },
-    buyer: {
+    register: {
         id: { type: String },
         name: { type: String },
-    },
-    receiver: {
-        id: { type: String },
-        name: { type: String },
-        relationship: { type: String },
         email: { type: String },
-        address: { type: String }
+        address: { type: String },
+    },
+    contact: {
+        id: { type: String },
+        name: { type: String },
+        relationship: { type: String }
     },
     phone: {
          type: String,
          required: true
     },
+    date: {
+        type: Date,
+        required: true
+   },
     facility: {
         type: String,
         required: true
@@ -32,7 +36,7 @@ const orderSchema = new Schema({
     }],
     totalPrice: {
         type: Number,
-        auto: 0
+        default: 0
     },
     status: {
         type: String, 
@@ -41,25 +45,25 @@ const orderSchema = new Schema({
     },
 });
 
-orderSchema.plugin(mongoosePaginate);
-const Order = mongoose.model('Order', orderSchema);
+signupSchema.plugin(mongoosePaginate);
+const Signup = mongoose.model('Signup', signupSchema);
 module.exports  = {
     async loadWithPagination(filter, options) {
-        return await Order.paginate(filter, options)
+        return await Signup.paginate(filter, options)
     },
 
-    async updateOrderById(id, update) {
-        return await Order.findOneAndUpdate(id, update, {
+    async updateSignupById(id, update) {
+        return await Signup.findOneAndUpdate(id, update, {
             new: true
         });
     },
 
-    async addOrder(order) {
-        return await Order.create(order);
+    async addSignup(signup) {
+        return await Signup.create(signup);
     },
 
-    async getOrderById(id) {
-        return await Order.findOne(id).populate('vaccines.item');;
+    async getSignupById(id) {
+        return await Signup.findOne(id).populate('vaccines.item');;
     }
 
 }

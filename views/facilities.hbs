@@ -7,8 +7,14 @@
                       <!-- Search bar -->
                         <nav class="navbar navbar-light bg-light">
                             <div class="container-fluid" >
-                              <form class="d-flex" action="/vaccines/search" method="get">
-                                <input class="form-control me-2" type="search" name= "name" placeholder="Tìm kiếm vacxin" aria-label="Search">
+                              <form class="d-flex" action="/facilities/search" method="post">
+                                <select class="form-control" id="relationship" name="location">
+                                    <option selected>Hà Nội</option>
+                                    <option>TP.Hồ Chí Minh</option>
+                                    <option>Lạng Sơn</option>
+                                    <option>Đăk Lăk</option>
+                                  </select>
+                                {{!-- <input class="form-control me-2" type="search" name= "name" placeholder="Tìm kiếm vacxin" aria-label="Search"> --}}
                                 <button class="btn btn-outline-primary" type="submit">Search</button>
                               </form>
                             </div>

@@ -16,6 +16,20 @@ class FacilityController {
             .catch(next);
     }
 
+    async findFacilities(req, res, next) {
+        await Facility.findFacilities(req.body.location)
+            .then(function(result) {
+                let facilities = []
+                result.records.forEach(function(record) {
+                    facilities.push(record._fields[0])
+                });
+                //console.log(facilities);
+                res.render('facilities', {
+                    facilities: facilities
+                })
+            })
+            .catch(next);
+    }
 }
 
 module.exports = new FacilityController();

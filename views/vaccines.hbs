@@ -35,10 +35,10 @@
                                   <td>{{this.prevention}}</td>
                                   <td>{{this.price}}</td>
                                   <td>
-                                    <form action="/vaccines/detail" method="get" style="display: inline-block;">
+                                    {{!-- <form action="/vaccines/detail" method="get" style="display: inline-block;">
                                       <button type="submit" name="_id" value="{{this._id}}" class="btn btn-default btn-xs" ><span class="bi bi-pencil-square"></span></button>
-                                    </form>
-                                    <button id="{{this.name}}" onclick="appendVaccine(this.value, this.id)" name="_id" value="{{this._id}}" class="btn btn-default btn-xs" ><span class="bi bi-trash-fill"></span></button>
+                                    </form> --}}
+                                    <button id="{{this.name}}" onclick="appendVaccine(this.value, this.id)" name="_id" value="{{this._id}}" class="btn btn-default btn-xs" ><span class="bi bi-plus-circle"></span></button>
                                   </td>
                               </tr>
                               {{/each}}
@@ -70,12 +70,12 @@
                       {{/if}}                    
                     </ul>
                 <!-- Modal (Order vaccine new customer) -->
-                <button id="add-product-btn" type="button" class="btn" data-toggle="modal" data-target="#addProductModal">Đặt mua vaccine</button>
+                <button id="add-product-btn" type="button" class="btn" data-toggle="modal" data-target="#addProductModal">Đặt mua vaccine cho người mới</button>
                 <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="addProductModalLabel">Đặt mua vaccine</h5>
+                          <h5 class="modal-title" id="addProductModalLabel">Đặt mua vaccine cho người mới</h5>
                         </div>
                         <div class="modal-body">
                             <form  action="/orders/add" method="POST">
@@ -85,7 +85,7 @@
                                     <input type="text" class="form-control" id="buyerName" name="buyerName" placeholder="Người đặt">
                                   </div>
                                   <div class="form-group col-md-6">
-                                    <label for="buyerId">Mã khách hàng</label>
+                                    <label for="buyerId">Mã khách hàng (nếu có)</label>
                                     <input type="text" class="form-control" id="buyerName" name="buyerId" placeholder="Mã khách hàng">
                                   </div>
                                   <div class="form-group col-md-6">
@@ -94,7 +94,17 @@
                                   </div>
                                   <div class="form-group col-md-6">
                                     <label for="relationship">Quan hệ</label>
-                                    <input type="text" class="form-control" id="receiverName" name="relationship" placeholder="Mối quan hệ" required>
+                                    <select class="form-control" id="relationship" name="relationship">
+                                      <option selected>Bản thân</option>
+                                      <option>Anh</option>
+                                      <option>Chị</option>
+                                      <option>Em</option>
+                                      <option>Ông</option>
+                                      <option>Bà</option>
+                                      <option>Bố</option>
+                                      <option>Mẹ</option>
+                                      <option>Con</option>
+                                    </select>
                                   </div>
                                   <div class="form-group col-md-6">
                                     <label for="email">Email</label>
@@ -110,9 +120,13 @@
                                   </div>
                                   <div class="form-group col-md-6">
                                     <label for="facility">Địa điểm muốn tiêm</label>
-                                    <input type="text" class="form-control" id="facility" name="facility" placeholder="Trung tâm tiêm" required>
+                                    <select class="form-control" id="facility" name="facility" required>
+                                        {{#each facilities}}
+                                            <option>{{this.properties.name}}</option>
+                                        {{/each}}
+                                    </select>
                                   </div>
-                                  <div class="form-group col-md-6" id="orderFormItems">
+                                  <div class="form-group col-md-6" id="orderFormItems1">
                                     <label>Danh sách vaccine được chọn</label>
                                   </div>
                                   </div>
@@ -125,9 +139,123 @@
                         </div>
                       </div>
                     </div>
-                </div>
                 <!-- End of Modal  -->
+                <!-- Modal (Order vaccine for old customer) -->
+                <button id="add-product-btn" type="button" class="btn" data-toggle="modal" data-target="#orderForOldCustomer">Đặt mua vaccine cho khách hàng thân thiết</button>
+                <div class="modal fade" id="orderForOldCustomer" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="addProductModalLabel">Đặt mua vaccine cho khách hàng thân thiết</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form  action="/orders/add" method="POST">
+                              <div class="row">
+                                  <div class="form-group col-md-6">
+                                    <label for="buyerId">Mã khách hàng</label>
+                                    <input type="text" class="form-control" id="buyerName" name="buyerId" placeholder="Mã khách hàng">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="facility">Địa điểm muốn tiêm</label>
+                                    <select class="form-control" id="facility" name="facility" required>
+                                        {{#each facilities}}
+                                            <option>{{this.properties.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                  </div>
+                                  <div class="form-group col-md-6" id="orderFormItems2">
+                                    <label>Danh sách vaccine được chọn</label>
+                                  </div>
+                                  </div>
+                                </div>                                                       
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-primary">Đặt đơn hàng</button>
+                                </div>
+                            </form>
+                        </div>
+                      </div>
+                    </div>
+                <!-- End of Modal  -->
+                <!-- Modal (Sign up for vaccination) -->
+                <button id="add-product-btn" type="button" class="btn" data-toggle="modal" data-target="#signupModal">Đăng ký tiêm</button>
+                <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="addProductModalLabel">Đăng ký tiêm</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form  action="/signups/add" method="POST">
+                              <div class="row">
+                                  <div class="form-group col-md-6">
+                                    <label for="fullname">Họ và tên</label>
+                                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Họ và tên">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="registerId">Mã khách hàng (nếu có)</label>
+                                    <input type="text" class="form-control" id="registerId" name="registerId" placeholder="Mã khách hàng">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="address">Địa chỉ</label>
+                                    <input type="text" class="form-control" id="address" name="address" placeholder="Địa chỉ" required>
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="facility">Địa điểm muốn tiêm</label>
+                                    <select class="form-control" id="facility" name="facility" required>
+                                        {{#each facilities}}
+                                            <option>{{this.properties.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="date">Ngày tiêm</label>
+                                    <input type="date" class="form-control" id="date" name="date" required>
+                                  </div>
+                                   <div class="form-group col-md-6">
+                                    <label for="contact">Tên người liên hệ</label>
+                                    <input type="text" class="form-control" id="contact" name="contact" placeholder="Tên người liên hệ" required>
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="relationship">Quan hệ với người liên hệ</label>
+                                    <select class="form-control" id="relationship" name="relationship">
+                                      <option selected>Anh</option>
+                                      <option>Chị</option>
+                                      <option>Em</option>
+                                      <option>Ông</option>
+                                      <option>Bà</option>
+                                      <option>Bố</option>
+                                      <option>Mẹ</option>
+                                      <option>Con</option>
+                                    </select>
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="phone">Số điện thoại người liên hệ</label>
+                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Số điện thoại người liên hệ" required>
+                                  </div>
+                                  <div class="form-group col-md-6" id="signupFormItems">
+                                    <label>Danh sách vaccine được chọn</label>
+                                  </div>
+                                  </div>
+                                </div>                                                       
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-primary">Đăng ký tiêm chủng</button>
+                                </div>
+                            </form>
+                        </div>
+                      </div>
+                    </div>
+                <!-- End of Modal  -->
+
+                </div>
                 
+                
+                 
             </div>  
 {{/if}}
 

@@ -1,0 +1,190 @@
+<!-- Page Content -->
+<div class="container">
+  {{#if user}}
+  {{else}}
+  {{!-- Question submit form --}}
+  <div class="card">
+      <div class="card-body">
+          <h5 class="card-title">Đặt câu hỏi</h5>
+          <form  action="/questions/add" method="POST">
+                  <div class="row">
+                      <div class="form-group col-md-6">
+                        <label for="poster">Họ và tên</label>
+                        <input type="text" class="form-control" id="poster" name="poster" placeholder="Họ và tên" required>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="phone">Số điện thoại</label>
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Số điện thoại" required>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="gender">Giới tính</label>
+                        <select class="form-control" id="gender" name="gender">
+                          <option selected>Nam</option>
+                          <option>Nữ</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="age">Tuổi</label>
+                        <input type="number" class="form-control" id="age" name="age" placeholder="Tuổi">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="address">Địa chỉ</label>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Địa chỉ">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="subject">Chủ đề</label>
+                        <select class="form-control" id="subject" name="subject">
+                          <option selected>Vắc xin cho người lớn</option>
+                          <option>Vắc xin cho trẻ em</option>
+                        </select>
+                      </div>
+                    </div>  
+                    <div class="row">
+                      <div class="form-group col-md-12">
+                        <label for="comment">Câu hỏi</label>
+                        <input type="text" class="form-control" id="comment" name="comment" placeholder="Đặt câu hỏi">
+                      </div>
+                    </div> 
+                        <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Đặt câu hỏi</button>
+                </form>
+      </div>
+  </div>
+  {{/if}}
+  {{!-- Question submit form end! --}}
+  <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Danh sách câu hỏi và trả lời</h5>
+                          <!-- Search bar -->
+                            <nav class="navbar navbar-light bg-light">
+                                <div class="container-fluid" >
+                                  <form class="d-flex" action="/questions/search" method="get">
+                                    <select class="form-control" id="topic" name="subject">
+                                        <option selected>Vắc xin cho người lớn</option>
+                                        <option>Vắc xin cho trẻ em</option>
+                                       
+                                      </select>
+                                    {{!-- <input class="form-control me-2" type="search" name= "name" placeholder="Tìm kiếm vacxin" aria-label="Search"> --}}
+                                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                                  </form>
+                                </div>
+                            </nav>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr> 
+                                                <th>Khách hàng</th>
+                                                <th>Chủ đề</th>
+                                                <th>Nội dung câu hỏi</th>
+                                                {{#if user}}
+                                                  <th>Trả lời</th>
+                                                {{/if}}
+                                                
+                                            </tr>
+                                        </thead>                   
+                                        <tbody>   
+                                            {{#each questions}}                                                                                                         
+                                              <tr data-toggle="collapse" data-target="#{{this._id}}" class="accordion-toggle">    
+                                                  <td>{{this.poster}}</td>
+                                                  <td>{{this.subject}}</td>
+                                                  <td>{{this.comment}}</td>
+                                                  {{#unless this.answer.employee}}
+                                                    {{#if ../user}}
+                                                      <td>
+                                                        <button onclick="appendQuestionIdToModal(this.value)" name="_id" value="{{this._id}}" class="btn btn-default btn-xs" 
+                                                        data-toggle="modal" data-target="#answerQuestionModal"><span class="bi bi-pencil-square"></span></button>
+                                                      </td>
+                                                    {{/if}}
+                                                  {{/unless}}
+                                                  
+                                              </tr>
+                                              {{#if this.answer.employee}}
+                                                  <tr>
+                                                    <td colspan="6" class="hiddenRow">
+                                                        <!-- collapse order data-->
+                                                        <div class="collapse" id="{{this._id}}">
+                        
+                                                            <div class="card card-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-4 detail-attribute">Người trả lời</div>
+                                                                    <div class="col-sm-8">
+                                                                        {{this.answer.employee}}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-4 detail-attribute">Câu trả lời</div>
+                                                                    <div class="col-sm-8">
+                                                                        {{this.answer.comment}} 
+                                                                    </div>
+                                                                </div>
+                                                                </div>                           
+                                                            </div>
+                                                        </div>
+                                                        <!--  -->
+                                                    </td>
+                                                </tr>
+                                              {{/if}}
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>                            
+                            </div>      
+                </div>
+            </div>  
+    </div>
+    </div>
+              <!-- Pagination -->
+                    <ul class="pagination">
+                      {{#if hasPrev}}
+                          <li class="page-item"><a class="page-link" href="/questions{{subRoute}}/{{prevAndNext.prev}}">Previous</a></li>
+                      {{else}}
+                          <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                      {{/if}}
+                      {{#if hasPrev}}
+                        <li class="page-item"><a class="page-link" href="/questions{{subRoute}}/{{prevAndNextInPages.prev}}">...</a></li>
+                      {{/if}}
+                      {{#each page}}
+                        <li class="page-item"><a class="page-link" href="/questions{{subRoute}}/{{this.page}}">{{this.page}}</a></li>
+                      {{/each}}
+                      {{#if hasNext}}
+                        <li class="page-item"><a class="page-link" href="/questions{{subRoute}}/{{prevAndNextInPages.next}}">...</a></li>
+                      {{/if}}
+                      {{#if hasNext}}
+                        <li class="page-item"><a class="page-link" href="/questions{{subRoute}}/{{prevAndNext.prev}}">Next</a></li>
+                      {{else}}
+                        <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                      {{/if}}                    
+                    </ul>
+</div>  
+ <!-- Modal (Answere question modal) -->
+                <div class="modal fade" id="answerQuestionModal" tabindex="-1" role="dialog" aria-labelledby="answerQuestionModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="answerQuestionModalLabel">Đặt mua vaccine</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form  action="/questions/answer" method="POST" >
+                              <div class="row">
+                                  <div class="form-group col-md-12" id="answerForm">
+                                    <label for="answer">Trả lời</label>
+                                    <input type="text" class="form-control" id="answer" name="answer" placeholder="Câu trả lời">
+                                  </div>
+                                </div>                                                       
+                                <div class="modal-footer">
+                                  <button type="button" onClick="removeOldInput()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-primary">Trả lời câu hỏi</button>
+                                </div>
+                            </form>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <!-- End of Modal  -->
+<!-- End of page content -->

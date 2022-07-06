@@ -1,0 +1,64 @@
+<!-- Page Content -->
+{{#if alert}}
+  <div class="alert alert-success">
+    <strong>{{alert}}</strong>
+  </div>
+{{/if}}
+            <div class="container">
+              <div class="card">
+                  <div class="card-body">
+                      <h5 class="card-title">Tìm kiếm lịch sử tiêm</h5>
+                      <!-- Search bar -->
+                        <nav class="navbar navbar-light bg-light">
+                            <div class="container-fluid" >
+                              <form class="d-flex" action="/appointment/search" method="get">
+                                <input class="form-control me-2" type="search" name= "customerId" placeholder="Nhập mã khách hàng" aria-label="Search">
+                                <button class="btn btn-outline-primary" type="submit">Search</button>
+                              </form>
+                            </div>
+                        </nav>
+            
+                        <!--  -->
+                      {{#if appointments}}
+                      <table id="example" class="table table-striped" style="width:100%">
+                          <thead>
+                              <tr>
+                                  <th>Mã khách hàng</th>
+                                  <th>Ngày tiêm</th>
+                                  <th>Trung tâm</th>
+                                  <th>Các vacxin được tiêm</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {{#each appointments}}
+                              <tr>
+                                  <td>{{../customerId}}</td>
+                                  <td>{{this.date}}</td>
+                                  <td>{{this.facility}}</td>
+                                  <td>{{#each this.vaccines}}
+                                      {{this}}<br>
+                                    {{/each}}</td>
+                                  <td>
+                                    <form action="/vaccines/detail" method="get" style="display: inline-block;">
+                                      <button type="submit" name="_id" value="{{this._id}}" class="btn btn-default btn-xs" ><span class="bi bi-pencil-square"></span></button>
+                                    </form>
+                                    <button id="{{this.name}}" onclick="appendVaccine(this.value, this.id)" name="_id" value="{{this._id}}" class="btn btn-default btn-xs" ><span class="bi bi-trash-fill"></span></button>
+                                  </td>
+                              </tr>
+                              {{/each}}
+                                                                                          
+                          </tbody>
+                      </table>
+                      {{/if}}
+                  </div>
+              </div>
+                 <!-- Pagination -->
+                    <ul class="pagination">
+                          <li class="page-item"><a class="page-link" href="/appointments{{subRoute}}/{{prevPage}}">Previous</a></li>
+                          <li class="page-item"><a class="page-link" href="/appointments{{subRoute}}/{{currentPage}}">{{currentPage}}</a></li>
+                          <li class="page-item"><a class="page-link" href="/appointments{{subRoute}}/{{nextPage}}">Next</a></li>
+
+                    </ul>
+                </div>
+            </div>  
+            <!-- End of page content -->

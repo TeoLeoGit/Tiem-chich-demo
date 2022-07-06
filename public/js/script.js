@@ -20,10 +20,28 @@ function onChange() {
 function appendVaccine(buttonValue, vaccineName) {
     var vaccineInputHtml = '<input type="hidden" class="form-control" id="vaccines" value="' + buttonValue + 
     '" name="vaccines">'
-    $('#orderFormItems').append($(vaccineInputHtml));
-    var vaccineNameHtml = '<li>' + vaccineName + '</li>'
-    $('#orderFormItems').append($(vaccineNameHtml));
+    var vaccineNameHtml = '<li>' + vaccineName + '</li>';
+    
+    $('#orderFormItems1').append($(vaccineInputHtml));
+    $('#orderFormItems1').append($(vaccineNameHtml));
+    document.getElementById(vaccineName).style.display = 'none'; 
+
+    $('#orderFormItems2').append($(vaccineNameHtml));
+    $('#orderFormItems2').append($(vaccineInputHtml));
+    document.getElementById(vaccineName).style.display = 'none'; 
+    
+    $('#signupFormItems').append($(vaccineNameHtml));
+    $('#signupFormItems').append($(vaccineInputHtml));
     document.getElementById(vaccineName).style.display = 'none'; 
 }
 
+function appendQuestionIdToModal(id) {
+  var questionInputHtml = '<input type="hidden" class="form-control" value="' + id + 
+  '" name="_id" id="temporaryInput">'
+  $('#answerForm').append($(questionInputHtml));
+}
+
+function removeOldInput() {
+  document.getElementById("temporaryInput").remove();
+}
 

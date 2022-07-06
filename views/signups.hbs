@@ -5,31 +5,37 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Pending orders</h5>
+                    <h5 class="card-title">Đơn đăng ký tiêm chưa được duyệt</h5>
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr> 
-                                                <th>Customer</th>
-                                                <th>Address</th>
-                                                <th>Email</th>
-                                                <th>Time</th>           
-                                                <th>Action</th>                                      
+                                                <th>Người đăng ký</th>
+                                                <th>Số điện thoại</th>
+                                                <th>Ngày đăng ký tiêm</th>
+                                                <th>Cơ sở đăng ký</th>
+                                                <th>Danh sách vacxin đăng ký</th>
                                             </tr>
                                         </thead>                   
                                         <tbody>   
-                                            {{#each orders}}                                                                                                         
+                                            {{#each signups}}                                                                                                         
                                             <tr data-toggle="collapse" data-target="#{{this._id}}" class="accordion-toggle">    
-                                                <td>{{this.name}}</td>
-                                                <td>{{this.address}}</td>
-                                                <td>{{this.email}}</td>
-                                                <td>{{this.createdAt}}</td>
+                                                <td>{{this.register.name}}</td>
+                                                <td>{{this.phone}}</td>
+                                                <td>{{this.date}}</td>
+                                                <td>{{this.facility}}</td>
                                                 <td>
-                                                    <form action="/orders/receive" method="post" style="display: inline-block;">
+                                                    {{#each this.vaccines}} 
+                                                        {{this.item.name}} <br>  
+                                                    {{/each}} 
+                                                </td>
+ 
+                                                <td>
+                                                    <form action="/appointment/createForSignup" method="get" style="display: inline-block;">
                                                         <button type="submit" name="_id" value="{{this._id}}" class="btn btn-default btn-xs"><span class="bi bi-check-circle-fill"></span></button>                           
                                                     </form>
-                                                    <form action="/orders/decline" method="post" style="display: inline-block;">   
+                                                    <form action="/signups/reject" method="post" style="display: inline-block;">   
                                                         <button type="submit" name="_id" value="{{this._id}}" class="btn btn-default btn-xs"><span class="bi bi-x-circle-fill"></span></button> 
                                                     </form>
                                                 </td>
@@ -41,23 +47,27 @@
                     
                                                         <div class="card card-body">
                                                             <div class="row">
-                                                                <div class="col-sm-4 detail-attribute">Phone number:</div>
+                                                                <div class="col-sm-4 detail-attribute">Email</div>
                                                                 <div class="col-sm-8">
-                                                                    {{this.phone}}
+                                                                    {{this.register.email}}
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-sm-4 detail-attribute">Ordered items:</div>
+                                                                <div class="col-sm-4 detail-attribute">Địa chỉ</div>
                                                                 <div class="col-sm-8">
-                                                                    {{#each this.products}} 
-                                                                        {{this.item.name}}({{this.qty}}), 
-                                                                    {{/each}} 
+                                                                    {{this.register.address}}
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-sm-4 detail-attribute">Total price:</div>
+                                                                <div class="col-sm-4 detail-attribute">Người liên hệ</div>
                                                                 <div class="col-sm-8">
-                                                                    {{this.totalPrice}}
+                                                                    {{this.contact.name}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-4 detail-attribute">Quan hệ</div>
+                                                                <div class="col-sm-8">
+                                                                    {{this.register.relationship}}
                                                                 </div>
                                                             </div>
                                                             </div>                           
@@ -78,21 +88,21 @@
               <!-- Pagination -->
                     <ul class="pagination">
                       {{#if hasPrev}}
-                          <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{prevAndNext.prev}}">Previous</a></li>
+                          <li class="page-item"><a class="page-link" href="/signups{{subRoute}}/{{prevAndNext.prev}}">Previous</a></li>
                       {{else}}
                           <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
                       {{/if}}
                       {{#if hasPrev}}
-                        <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{prevAndNextInPages.prev}}">...</a></li>
+                        <li class="page-item"><a class="page-link" href="/signups{{subRoute}}/{{prevAndNextInPages.prev}}">...</a></li>
                       {{/if}}
                       {{#each page}}
-                        <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{this.page}}">{{this.page}}</a></li>
+                        <li class="page-item"><a class="page-link" href="/signups{{subRoute}}/{{this.page}}">{{this.page}}</a></li>
                       {{/each}}
                       {{#if hasNext}}
-                        <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{prevAndNextInPages.next}}">...</a></li>
+                        <li class="page-item"><a class="page-link" href="/signups{{subRoute}}/{{prevAndNextInPages.next}}">...</a></li>
                       {{/if}}
                       {{#if hasNext}}
-                        <li class="page-item"><a class="page-link" href="/orders{{subRoute}}/{{prevAndNext.prev}}">Next</a></li>
+                        <li class="page-item"><a class="page-link" href="/signups{{subRoute}}/{{prevAndNext.prev}}">Next</a></li>
                       {{else}}
                         <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
                       {{/if}}                    
