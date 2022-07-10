@@ -6,5 +6,6 @@ router.get('/:page', controller.getNewOrders);
 router.post('/add', controller.createOrder);
 //router.post('/receive', controller.receiveOrder);
 router.post('/reject', controller.declineOrder);
+router.get('/detail', controller.getNewOrders);
 router.get('/', controller.getNewOrders);
 module.exports = router;

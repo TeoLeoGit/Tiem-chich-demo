@@ -14,9 +14,16 @@
                             <div class="container-fluid" >
                               <form class="d-flex" action="/vaccines/search" method="get">
                                 <input class="form-control me-2" type="search" name= "name" placeholder="Tìm kiếm vacxin" aria-label="Search">
+                                <select class="form-control" id="category" name="category">
+                                    <option disabled selected value> Danh mục </option>
+                                    <option value="Vacxin cho người trưởng thành">Vacxin cho người trưởng thành</option>
+                                    <option value="Vacxin cho trẻ tiền học đường">Vacxin cho trẻ tiền học đường</option>
+                                    <option value="vacxin cho tuổi vị thành niên và cả thanh xuan">vacxin cho tuổi vị thành niên và cả thanh xuan</option>
+                                </select>
                                 <button class="btn btn-outline-primary" type="submit">Search</button>
                               </form>
                             </div>
+                            
                         </nav>
             
                         <!--  -->
@@ -35,9 +42,9 @@
                                   <td>{{this.prevention}}</td>
                                   <td>{{this.price}}</td>
                                   <td>
-                                    {{!-- <form action="/vaccines/detail" method="get" style="display: inline-block;">
+                                    <form action="/vaccines/detail" method="get" style="display: inline-block;">
                                       <button type="submit" name="_id" value="{{this._id}}" class="btn btn-default btn-xs" ><span class="bi bi-pencil-square"></span></button>
-                                    </form> --}}
+                                    </form>
                                     <button id="{{this.name}}" onclick="appendVaccine(this.value, this.id)" name="_id" value="{{this._id}}" class="btn btn-default btn-xs" ><span class="bi bi-plus-circle"></span></button>
                                   </td>
                               </tr>
@@ -120,7 +127,8 @@
                                   </div>
                                   <div class="form-group col-md-6">
                                     <label for="facility">Địa điểm muốn tiêm</label>
-                                    <select class="form-control" id="facility" name="facility" required>
+                                    <select class="form-control" id="facility" name="facility" value="VNVC Bình Tân">
+                                      <option value="VNVC Bình Tân" selected >{{this.properties.name}}</option>
                                         {{#each facilities}}
                                             <option>{{this.properties.name}}</option>
                                         {{/each}}

@@ -38,12 +38,6 @@
                                   <td>{{#each this.vaccines}}
                                       {{this}}<br>
                                     {{/each}}</td>
-                                  <td>
-                                    <form action="/vaccines/detail" method="get" style="display: inline-block;">
-                                      <button type="submit" name="_id" value="{{this._id}}" class="btn btn-default btn-xs" ><span class="bi bi-pencil-square"></span></button>
-                                    </form>
-                                    <button id="{{this.name}}" onclick="appendVaccine(this.value, this.id)" name="_id" value="{{this._id}}" class="btn btn-default btn-xs" ><span class="bi bi-trash-fill"></span></button>
-                                  </td>
                               </tr>
                               {{/each}}
                                                                                           

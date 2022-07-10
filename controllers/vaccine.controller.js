@@ -5,9 +5,10 @@ const {mongooseToObject} = require('../utils/mongooseUtil');
 
 class VaccineController {
     getVaccineDetail(req, res, next) {
+        console.log(req.query)
         Vaccine.getVaccineById(req.query)
             .then(vaccine => {
-                res.render('vaccineDetail', mongooseToObject(vaccine))
+                res.render('vaccineDetails', mongooseToObject(vaccine))
             })
             .catch(next);
     }
@@ -68,8 +69,9 @@ class VaccineController {
         let filter = { activeFlag: 1}
         if (req.query.name)
             filter['name'] = { $regex: '.*' + req.query.name + '.*'}
+        if (req.query.category)
+            filter.category = req.query.category
         if(req.params.page) options['page'] = parseInt(req.params.page)
-
         
         await Vaccine.loadWithPagination(filter, options)
             .then(result => {
